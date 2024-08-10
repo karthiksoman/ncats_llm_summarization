@@ -10,9 +10,6 @@ client = OpenAI(api_key = os.environ.get('API_KEY'))
 LLM_MODEL = 'gpt-3.5-turbo'
 TEMPERATURE = 0.7
 MAX_TOKEN_LIMIT = 15000
-MIN_RESULT_TO_CONSIDER = 5
-RESULT_SWEEP_STEP_SIZE = 10
-
 
 HIGH_LEVEL_SUMMARY_SYSTEM_PROMPT = '''
 You are an expert in summarizing biomedical knowledge in max 500 words.
