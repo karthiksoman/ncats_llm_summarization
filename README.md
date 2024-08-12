@@ -10,7 +10,7 @@ https://biosummary.pythonanywhere.com
 
 API has the summary endpoint called **"/summary"**.
 
-It currently accepts JSON structured data which holds the user "query" and the "results" which has the following structure:
+It currently accepts JSON structured data which holds the user "query" and the "results" which has the following structure (Eg. refer this [sample data](https://github.com/karthiksoman/ncats_llm_summarization/blob/main/sample_data/mvp1-2ad7c20f-c252-4c15-bdf2-f4e4b5e7b50c.json)):
 
 ```
 {
