@@ -15,11 +15,16 @@ It currently accepts JSON structured data which holds the user "query" and the "
 ```
 {
   "query": "<a question of string datatype>",
-  "results": {
-    "<name of a biomedical concept>": [
-      <a list where each element represents a biological path (i.e., a sequence of edges) extracted from a knowledge graph>
-    ]
-  }
+  "results": [
+    {
+      "name": "<name of a biomedical concept>",
+      "paths": [
+        "<biological path 1>",
+        "<biological path 2>",
+        "<biological path 3>"
+      ]
+    }
+  ]
 }
 ```
 
