@@ -3,7 +3,6 @@ from webargs.flaskparser import use_kwargs
 from webargs.fields import Str
 from webargs import fields, validate
 from openai import OpenAI, OpenAIError
-import json
 from utility import *
 
 app = Flask(__name__)
