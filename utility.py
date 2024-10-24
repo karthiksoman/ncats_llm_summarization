@@ -5,14 +5,16 @@ import os
 import json
 
 load_dotenv(os.path.join(os.path.expanduser('~'), '.gpt_ncats.env'))
+load_dotenv(os.path.join(os.path.expanduser('~'), '.ncats_llama.env'))
 
 LLM_MODEL = 'gpt-4o-mini'
-TEMPERATURE = 0.7
-MAX_TOKEN_LIMIT = 15500
+TEMPERATURE = 0.1
+MAX_TOKENS = 750
+MAX_TOKEN_LIMIT = 6000
 
 
 HIGH_LEVEL_SUMMARY_SYSTEM_PROMPT_WITHOUT_JSON_RESPONSE = '''
-You are an expert in summarizing biomedical knowledge in max 1000 words.
+You are an expert in summarizing biomedical knowledge in max 1000 words. 
 
 You will receive a dictionary in the following format:
 {
@@ -37,7 +39,11 @@ Your task is to provide a summarized answer to the given query in max 1000 words
 - Combine all the biological paths corresponding to all answers into a graph. Using that graph, provide a coherent textual summary that explains the mechanistic rationale for the given answers to the query.
 - Summarize any shared paths or nodes by integrating them where applicable.
 - Ensure that the summary is biologically accurate, by providing right explanations to the biomedical concepts such as genes or proteins.
+- Give a conclusion paragraph in the last, followed by the string "End of Response"
 - If no context is provided, report that there is no context available for summarization.
+- Give your summarization in maximum three paragraphs.
+- Do not give a big list of names of entities. Whenever you give the list of names, always separate the names with a comma (example: S-NITROSOGLUTATHIONE, alsterpaullone, AZD8186, XANTHOHUMOL).
+- Do not give any dashes in the response  (like "-")
 
 
 Example:
@@ -75,8 +81,10 @@ Example:
           ]
 }
 
-Response:
-Ehlers-Danlos syndrome, hypermobility type (hEDS) is a connective tissue disorder characterized by joint hypermobility, skin elasticity, and a predisposition to musculoskeletal pain and other associated phenotypes, including chronic pain, depressive disorders, anxiety, and various mild to severe complications. Several pharmacological interventions have shown potential in managing the symptoms related to this condition. Cyclophosphamide is recognized for its ability to modulate collagen synthesis, as indicated by its effect on increasing the activity of the COL3A1 gene, linked to hEDS. It has been studied for alleviating specific symptoms or phenotypes of hEDS, notably gingival overgrowth, arthralgia, and xerophthalmia. These indications suggest that the drug could play a role in managing some of the secondary issues often faced by patients with hEDS. Citalopram, a selective serotonin reuptake inhibitor (SSRI), has been found beneficial in addressing psychiatric manifestations often associated with hEDS, including anxiety and depressive disorders. It has been evaluated in clinical trials specifically aimed at treating these conditions as they are prevalent among patients, indicating that mental health management is crucial in the holistic treatment of hEDS. Lidocaine, a local anesthetic, has also been involved in treatment strategies for hEDS. It demonstrates capabilities in preventing and treating chronic pain, myalgia, and other neurogenic pain manifestations. Additionally, lidocaine has been investigated for its efficacy in managing cardiac rhythm disorders, migraines, and even anxiety, showcasing its multi-faceted potential in addressing various complications attributable to hEDS. It is noteworthy that the diverse range of phenotypes linked to hEDS creates a complex clinical picture, prompting the investigation of various medications to provide comprehensive symptom relief.
+Response (not that this example response is given in three paragraphs):
+Ehlers-Danlos syndrome, hypermobility type (hEDS) is a connective tissue disorder characterized by joint hypermobility, skin elasticity, and a predisposition to musculoskeletal pain and other associated phenotypes, including chronic pain, depressive disorders, anxiety, and various mild to severe complications. Several pharmacological interventions have shown potential in managing the symptoms related to this condition. Cyclophosphamide is recognized for its ability to modulate collagen synthesis, as indicated by its effect on increasing the activity of the COL3A1 gene, linked to hEDS. It has been studied for alleviating specific symptoms or phenotypes of hEDS, notably gingival overgrowth, arthralgia, and xerophthalmia. These indications suggest that the drug could play a role in managing some of the secondary issues often faced by patients with hEDS. Citalopram, a selective serotonin reuptake inhibitor (SSRI), has been found beneficial in addressing psychiatric manifestations often associated with hEDS, including anxiety and depressive disorders. It has been evaluated in clinical trials specifically aimed at treating these conditions as they are prevalent among patients, indicating that mental health management is crucial in the holistic treatment of hEDS. 
+
+Lidocaine, a local anesthetic, has also been involved in treatment strategies for hEDS. It demonstrates capabilities in preventing and treating chronic pain, myalgia, and other neurogenic pain manifestations. Additionally, lidocaine has been investigated for its efficacy in managing cardiac rhythm disorders, migraines, and even anxiety, showcasing its multi-faceted potential in addressing various complications attributable to hEDS. It is noteworthy that the diverse range of phenotypes linked to hEDS creates a complex clinical picture, prompting the investigation of various medications to provide comprehensive symptom relief.
 
 In conclusion, the drugs cyclosporine, citalopram, and lidocaine are among those that may provide therapeutic benefits for individuals with Ehlers-Danlos syndrome, hypermobility type, specifically targeting its varied symptoms including pain management, mental health disorders, and other related phenotypes. The integration of these treatments into clinical practice underscores the need for a tailored approach to individual patient care, reflecting the multifactorial nature of hEDS.
 '''
